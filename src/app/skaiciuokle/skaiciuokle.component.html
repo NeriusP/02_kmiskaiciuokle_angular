@@ -1,0 +1,74 @@
+<div class="row ml-5 mr-5">
+    <div class="col-md-6">
+        <div class="card mt-5">
+            <div class="card-header">KMI skaičiuoklė</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Kūno masė (kg)</label><br>
+                    <input type="number" class="form-label" [(ngModel)] = "mase">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ūgis (cm)</label><br>
+                    <input type="number" class="form-label" [(ngModel)] = "ugis">
+                </div>
+                <button class="btn btn-success mb-5" (click)="skaiciuotiKMI(mase, ugis)">Skaičiuoti KMI</button><br>
+                    <div class="alert alert-secondary" *ngIf="kmi; else elseBlock">
+                        Kūno masės indeksas = {{ kmi }}
+                    </div>
+                    <ng-template #elseBlock>{{message}}</ng-template>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6  mr-3">
+       <div class="table">
+        <thead>
+            <tr>
+              <th scope="col">KMI reikšmė</th>
+              <th scope="col">Apibūdinimas</th>
+              <th scope="col">Ligų rizika</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr [ngClass]="{'table-primary':kmi>=svoriai[0] && kmi<svoriai[1]}">
+              <td>{{svoriai[0]}}-{{svoriai[1]}}</td>
+              <td>Normalus svoris</td>
+              <td>Nėra</td>
+              <td><div style="height: 20px; width:20px; background-color:darkgreen;border-radius: 50%;"></div></td>
+            </tr>
+            <tr [ngClass]="{'table-primary':kmi>=svoriai[1] && kmi<svoriai[2]}">
+              <td>{{svoriai[1]}}-{{svoriai[2]}}</td>
+              <td>Antsvoris</td>
+              <td>Nedidelė, stengtis, kad nedidėtų</td>
+              <td><div style="height: 20px; width:20px; background-color:yellowgreen;border-radius: 50%;"></div></td>
+            </tr>
+            <tr [ngClass]="{'table-primary':kmi>=svoriai[2] && kmi<svoriai[3]}">
+              <td>{{svoriai[2]}}-{{svoriai[3]}}</td>
+              <td>I lygio nutukimas</td>
+              <td>Padidėjusi, būtina mažinti svorį</td>
+              <td><div style="height: 20px; width:20px; background-color:yellow;border-radius: 50%;"></div></td>
+            </tr>
+            <tr [ngClass]="{'table-primary':kmi>=svoriai[3] && kmi<svoriai[4]}">
+                <td>{{svoriai[3]}}-{{svoriai[4]}}</td>
+                <td>II lygio nutukimas</td>
+                <td>Didelė, būtina mažinti svorį</td>
+                <td><div style="height: 20px; width:20px; background-color:coral;border-radius: 50%;"></div></td>
+            </tr>
+            <tr [ngClass]="{'table-primary':kmi>=svoriai[4] && kmi<svoriai[5]}">
+                <td>{{svoriai[4]}}-{{svoriai[5]}}</td>
+                <td>III lygio nutukimas</td>
+                <td>Labai didelė, būtina mažinti svorį</td>
+                <td><div style="height: 20px; width:20px; background-color:red;border-radius: 50%;"></div></td>
+            </tr>
+          </tbody>
+        
+       </div>
+       <div class="alert alert-danger" *ngIf="kmi < svoriai[0] && kmi != undefined">
+             Jūsų KMI per žemas: VALGYKITE DAUGIAU!!!
+     </div>
+     <div class="alert alert-danger" *ngIf="kmi > svoriai[5] && kmi != undefined">
+        Su tokiu dideliu masės indeksu žmonės ilgai negyvena: <br>
+        Kuo skubiau kreipkitės į medikus!!!
+</div>
+    </div>
+</div>
